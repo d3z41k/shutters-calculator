@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"github.com/d3z41k/shutters-calculator/pkg/models/mysql"
 	"log"
 	"net/http"
 	"os"
@@ -12,8 +13,9 @@ import (
 )
 
 type application struct {
-	errorLog *log.Logger
-	infoLog  *log.Logger
+	errorLog   *log.Logger
+	infoLog    *log.Logger
+	categories *mysql.CategoryModel
 }
 
 func main() {
@@ -33,8 +35,9 @@ func main() {
 	defer db.Close()
 
 	app := &application{
-		errorLog: errorLog,
-		infoLog:  infoLog,
+		errorLog:   errorLog,
+		infoLog:    infoLog,
+		categories: &mysql.CategoryModel{DB: db},
 	}
 
 	srv := &http.Server{
