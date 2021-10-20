@@ -2,18 +2,20 @@
 
 {{define "main"}}
     <h2>Shutters calculator</h2>
-    {{if .Categories}}
+    {{if .Fabrics}}
         <table>
             <tr>
                 <th>ID</th>
+                <th>Категория</th>
                 <th>Название</th>
                 <th>Цена, &#8381;</th>
             </tr>
-            {{range .Categories}}
+            {{range .Fabrics}}
             <tr>
                 <td>{{.ID}}</td>
+                <td>{{.Category.Name}}</td>
                 <td>{{.Name}}</td>
-                <td>{{.Price}}</td>
+                <td>{{.Category.Price}}</td>
             </tr>
             {{end}}
         </table>

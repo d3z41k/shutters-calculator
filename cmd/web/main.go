@@ -18,6 +18,7 @@ type application struct {
 	errorLog   *log.Logger
 	infoLog    *log.Logger
 	categories *mysql.CategoryModel
+	fabrics    *mysql.FabricsModel
 }
 
 func main() {
@@ -38,6 +39,7 @@ func main() {
 		errorLog:   errorLog,
 		infoLog:    infoLog,
 		categories: &mysql.CategoryModel{DB: db},
+		fabrics:    &mysql.FabricsModel{DB: db},
 	}
 
 	srv := &http.Server{

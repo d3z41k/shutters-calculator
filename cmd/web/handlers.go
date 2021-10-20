@@ -7,15 +7,15 @@ import (
 
 func (app *application) home() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ca, err := app.categories.All()
+		fs, err := app.fabrics.All()
 		if err != nil {
 			app.serverError(c.Writer, err)
 			return
 		}
 
 		c.HTML(http.StatusOK, "home.page.tmpl", gin.H{
-			"Title":      "Home",
-			"Categories": ca,
+			"Title":   "Home",
+			"Fabrics": fs,
 		})
 	}
 }

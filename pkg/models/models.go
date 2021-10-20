@@ -13,3 +13,10 @@ type Categories struct {
 	Name  string
 	Price int
 }
+
+type Fabrics struct {
+	ID         int
+	Name       string
+	CategoryID int
+	Category   Categories
+}
