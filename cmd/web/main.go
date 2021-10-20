@@ -2,17 +2,16 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"flag"
 	"github.com/d3z41k/shutters-calculator/pkg/models/mysql"
+	ms "gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type application struct {
@@ -23,7 +22,7 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":8080", "HTTP network address")
-	dsn := flag.String("dsn", "web:pass@/shutters_calculator?parseTime=true", "MySQL data source name")
+	dsn := flag.String("dsn", "web:pass@tcp(127.0.0.1:3306)/shutters_calculator?charset=utf8mb4&parseTime=True&loc=Local", "MySQL data source name")
 
 	flag.Parse()
 
@@ -34,8 +33,6 @@ func main() {
 	if err != nil {
 		errorLog.Fatal(err)
 	}
-
-	defer db.Close()
 
 	app := &application{
 		errorLog:   errorLog,
@@ -73,12 +70,9 @@ func main() {
 	log.Println("Server exiting")
 }
 
-func openDB(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("mysql", dsn)
+func openDB(dsn string) (*gorm.DB, error) {
+	db, err := gorm.Open(ms.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return nil, err
-	}
-	if err = db.Ping(); err != nil {
 		return nil, err
 	}
 	return db, nil
