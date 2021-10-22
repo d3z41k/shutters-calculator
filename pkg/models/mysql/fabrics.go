@@ -30,7 +30,7 @@ func (m *FabricsModel) Get(id int) (*models.Fabrics, error) {
 }
 
 func (m *FabricsModel) All() ([]*models.Fabrics, error) {
-	fabrics := []*models.Fabrics{}
+	var fabrics []*models.Fabrics
 	result := m.DB.Preload("Category").Find(&fabrics)
 	if result.Error != nil {
 		return nil, result.Error

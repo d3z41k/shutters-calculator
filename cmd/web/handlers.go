@@ -13,9 +13,23 @@ func (app *application) home() gin.HandlerFunc {
 			return
 		}
 
+		pw, err := app.profilesWidth.All()
+		if err != nil {
+			app.serverError(c.Writer, err)
+			return
+		}
+
+		ph, err := app.profilesHeight.All()
+		if err != nil {
+			app.serverError(c.Writer, err)
+			return
+		}
+
 		c.HTML(http.StatusOK, "home.page.tmpl", gin.H{
-			"Title":   "Home",
-			"Fabrics": fs,
+			"Title":          "Home",
+			"Fabrics":        fs,
+			"ProfilesWidth":  pw,
+			"ProfilesHeight": ph,
 		})
 	}
 }

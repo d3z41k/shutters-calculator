@@ -3,6 +3,23 @@
 {{define "main"}}
     <h2>Shutters calculator</h2>
     {{if .Fabrics}}
+        <div>
+            <select name="select">
+                {{range .Fabrics}}
+                <option value="{{.ID}}">{{.Name}}</option>
+                {{end}}
+            </select>
+            <select name="select">
+                {{range .ProfilesWidth}}
+                <option value="{{.Width}}">{{.Width}}</option>
+                {{end}}
+            </select>
+            <select name="select">
+                {{range .ProfilesHeight}}
+                <option value="{{.Height}}">{{.Height}}</option>
+                {{end}}
+            </select>
+        </div>
         <table>
             <tr>
                 <th>ID</th>
