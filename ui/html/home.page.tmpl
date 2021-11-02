@@ -12,9 +12,20 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Ткань</label>
+
                             <select name="fabric_id" class="custom-select rounded-0">
+                                {{$selectedFabric := .FabricID}}
                                 {{range .Fabrics}}
-                                <option value="{{.ID}}">{{.Name}}</option>
+                                <option value="{{.ID}}" {{if eq .ID $selectedFabric}} selected {{end}}>{{.Name}}</option>
+                                {{end}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Цвет</label>
+                            <select name="color_id" class="custom-select rounded-0">
+                                {{$selectedColor := .ColorID}}
+                                {{range .Colors}}
+                                <option value="{{.ID}}" {{if eq .ID $selectedColor}} selected {{end}}>{{.Name}}</option>
                                 {{end}}
                             </select>
                         </div>
@@ -22,13 +33,13 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Ширина</label>
-                                    <input type="text" name="profile_width" class="form-control" value="{{if .ProfileWidth}} {{.ProfileWidth}}{{end}}">
+                                    <input type="text" name="profile_width" class="form-control" value="{{if .ProfileWidth}}{{.ProfileWidth}}{{end}}">
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Высота</label>
-                                    <input type="text" name="profile_height" class="form-control" value="{{if .ProfileHeight}} {{.ProfileHeight}}{{end}}">
+                                    <input type="text" name="profile_height" class="form-control" value="{{if .ProfileHeight}}{{.ProfileHeight}}{{end}}">
                                 </div>
                             </div>
                         </div>

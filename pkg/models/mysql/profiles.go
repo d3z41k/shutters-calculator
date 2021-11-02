@@ -29,9 +29,9 @@ func (m *ProfilesModel) Get(id int) (*models.Profiles, error) {
 	return profile, nil
 }
 
-func (m *ProfilesModel) GetByField(field string, value interface{}) (*models.Profiles, error) {
+func (m *ProfilesModel) GetByFilter(filter map[string]interface{}) (*models.Profiles, error) {
 	profile := &models.Profiles{}
-	result := m.DB.Where(field+" = ?", value).First(profile)
+	result := m.DB.Where(filter).First(profile)
 	if result.Error != nil {
 		return nil, result.Error
 	}

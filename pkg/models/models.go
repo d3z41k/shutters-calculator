@@ -14,6 +14,18 @@ type Categories struct {
 	Price int
 }
 
+type Colors struct {
+	ID   int
+	Name string
+}
+
+type ColorsPrices struct {
+	ID      int
+	ColorID int
+	Width   int
+	Price   int
+}
+
 type Fabrics struct {
 	ID         int
 	Name       string
