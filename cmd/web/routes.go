@@ -11,6 +11,7 @@ func (app *application) routes() http.Handler {
 	r.Static("/static", "./ui/static")
 
 	r.GET("/", app.home())
+	r.POST("/", app.calc())
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

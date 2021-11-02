@@ -15,12 +15,11 @@ import (
 )
 
 type application struct {
-	errorLog       *log.Logger
-	infoLog        *log.Logger
-	categories     *mysql.CategoryModel
-	fabrics        *mysql.FabricsModel
-	profilesWidth  *mysql.ProfileWidthModel
-	profilesHeight *mysql.ProfileHeightModel
+	errorLog   *log.Logger
+	infoLog    *log.Logger
+	categories *mysql.CategoryModel
+	fabrics    *mysql.FabricsModel
+	profiles   *mysql.ProfilesModel
 }
 
 func main() {
@@ -38,12 +37,11 @@ func main() {
 	}
 
 	app := &application{
-		errorLog:       errorLog,
-		infoLog:        infoLog,
-		categories:     &mysql.CategoryModel{DB: db},
-		fabrics:        &mysql.FabricsModel{DB: db},
-		profilesWidth:  &mysql.ProfileWidthModel{DB: db},
-		profilesHeight: &mysql.ProfileHeightModel{DB: db},
+		errorLog:   errorLog,
+		infoLog:    infoLog,
+		categories: &mysql.CategoryModel{DB: db},
+		fabrics:    &mysql.FabricsModel{DB: db},
+		profiles:   &mysql.ProfilesModel{DB: db},
 	}
 
 	srv := &http.Server{

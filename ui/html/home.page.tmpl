@@ -1,41 +1,70 @@
 {{template "base" .}}
 
 {{define "main"}}
-    <h2>Shutters calculator</h2>
     {{if .Fabrics}}
-        <div>
-            <select name="select">
-                {{range .Fabrics}}
-                <option value="{{.ID}}">{{.Name}}</option>
-                {{end}}
-            </select>
-            <select name="select">
-                {{range .ProfilesWidth}}
-                <option value="{{.Width}}">{{.Width}}</option>
-                {{end}}
-            </select>
-            <select name="select">
-                {{range .ProfilesHeight}}
-                <option value="{{.Height}}">{{.Height}}</option>
-                {{end}}
-            </select>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Калькулятор</h3>
+                </div>
+                <form action="/" method='POST'>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Ткань</label>
+                            <select name="fabric_id" class="custom-select rounded-0">
+                                {{range .Fabrics}}
+                                <option value="{{.ID}}">{{.Name}}</option>
+                                {{end}}
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Ширина</label>
+                                    <input type="text" name="profile_width" class="form-control" value="{{if .ProfileWidth}} {{.ProfileWidth}}{{end}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Высота</label>
+                                    <input type="text" name="profile_height" class="form-control" value="{{if .ProfileHeight}} {{.ProfileHeight}}{{end}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Цена</label>
+                                    <p class="form-control">{{if .Result}} {{.Result}} {{else}} 0 {{end}}&#8381;</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Расчёт</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Категория</th>
-                <th>Название</th>
-                <th>Цена, &#8381;</th>
-            </tr>
-            {{range .Fabrics}}
-            <tr>
-                <td>{{.ID}}</td>
-                <td>{{.Category.Name}}</td>
-                <td>{{.Name}}</td>
-                <td>{{.Category.Price}}</td>
-            </tr>
-            {{end}}
-        </table>
+    </div>
+
+<!--        <table class="table">-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Категория</th>-->
+<!--                <th>Название</th>-->
+<!--                <th>Цена, &#8381;</th>-->
+<!--            </tr>-->
+<!--            {{range .Fabrics}}-->
+<!--            <tr>-->
+<!--                <td>{{.ID}}</td>-->
+<!--                <td>{{.Category.Name}}</td>-->
+<!--                <td>{{.Name}}</td>-->
+<!--                <td>{{.Category.Price}}</td>-->
+<!--            </tr>-->
+<!--            {{end}}-->
+<!--        </table>-->
     {{else}}
         <p>There's nothing to see here... yet!</p>
     {{end}}

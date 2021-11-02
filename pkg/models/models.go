@@ -8,10 +8,6 @@ var (
 	//ErrDuplicateEmail     = errors.New("models: duplicate email")
 )
 
-type Tabler interface {
-	TableName() string
-}
-
 type Categories struct {
 	ID    int
 	Name  string
@@ -25,21 +21,8 @@ type Fabrics struct {
 	Category   Categories
 }
 
-func (ProfilesWidth) TableName() string {
-	return "profiles_width"
-}
-
-type ProfilesWidth struct {
+type Profiles struct {
 	ID    int
 	Width int
 	Price int
-}
-
-func (ProfilesHeight) TableName() string {
-	return "profiles_height"
-}
-
-type ProfilesHeight struct {
-	ID     int
-	Height int
 }
