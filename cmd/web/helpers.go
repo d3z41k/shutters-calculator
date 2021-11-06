@@ -20,3 +20,12 @@ func (app *application) clientError(w http.ResponseWriter, status int) {
 func (app *application) notFound(w http.ResponseWriter) {
 	app.clientError(w, http.StatusNotFound)
 }
+
+func (app *application) Exist(slice []string, key string) bool {
+	for _, item := range slice {
+		if item == key {
+			return true
+		}
+	}
+	return false
+}

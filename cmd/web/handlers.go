@@ -22,10 +22,13 @@ func (app *application) home() gin.HandlerFunc {
 			return
 		}
 
+		var options []string
+
 		c.HTML(http.StatusOK, "home.page.tmpl", gin.H{
 			"Title":    "Home",
 			"Fabrics":  fs,
 			"Colors":   cs,
+			"Options":  options,
 			"FabricID": 0,
 			"ColorID":  0,
 		})
@@ -34,6 +37,33 @@ func (app *application) home() gin.HandlerFunc {
 
 func (app *application) calc() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
+		var options []string
+
+		optionsCheck := []string{
+			"outer_brackets",
+			"middle_fixer",
+			"profile_handle",
+		}
+
+		optionsRadio := []string{
+			"set_of_guides",
+			"control_stick",
+			"magnetic_clasps",
+		}
+
+		for _, key := range optionsCheck {
+			if c.PostForm(key) != "" {
+				options = append(options, key)
+			}
+		}
+
+		for _, key := range optionsRadio {
+			if c.PostForm(key) != "0" {
+				options = append(options, key+"_"+c.PostForm(key))
+			}
+		}
+
 		fabricID, _ := strconv.Atoi(c.PostForm("fabric_id"))
 		colorID, _ := strconv.Atoi(c.PostForm("color_id"))
 		profileWidth, _ := strconv.ParseFloat(c.PostForm("profile_width"), 64)
@@ -81,7 +111,17 @@ func (app *application) calc() gin.HandlerFunc {
 			}
 		}
 
-		result := math.Ceil(profileHeightRound/100*profileWidthRound/100.0*float64(fabric.Category.Price)+float64(profile.Price)) + float64(colorPrice.Price)
+		optionsPrice := 0
+
+		if len(options) > 0 {
+			optionsPrice, err = app.options.GetSumByKeys(options)
+			if err != nil {
+				app.serverError(c.Writer, err)
+				return
+			}
+		}
+
+		result := math.Ceil(profileHeightRound/100*profileWidthRound/100.0*float64(fabric.Category.Price)+float64(profile.Price)) + float64(colorPrice.Price) + float64(optionsPrice)
 
 		c.HTML(http.StatusOK, "home.page.tmpl", gin.H{
 			"Title":         "Home",
@@ -91,6 +131,7 @@ func (app *application) calc() gin.HandlerFunc {
 			"ColorID":       colorID,
 			"ProfileWidth":  profileWidth,
 			"ProfileHeight": profileHeight,
+			"Options":       options,
 			"Result":        result,
 		})
 	}

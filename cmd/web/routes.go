@@ -2,11 +2,16 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"net/http"
 )
 
 func (app *application) routes() http.Handler {
 	r := gin.Default()
+	r.SetFuncMap(template.FuncMap{
+		"exist": app.Exist,
+	})
+
 	r.LoadHTMLGlob("ui/html/*")
 	r.Static("/static", "./ui/static")
 

@@ -38,3 +38,9 @@ type Profiles struct {
 	Width int
 	Price int
 }
+
+type Options struct {
+	ID    int
+	Key   string
+	Price int
+}

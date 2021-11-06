@@ -22,6 +22,7 @@ type application struct {
 	profiles     *mysql.ProfilesModel
 	colors       *mysql.ColorsModel
 	colorsPrices *mysql.ColorsPricesModel
+	options      *mysql.OptionsModel
 }
 
 func main() {
@@ -46,6 +47,7 @@ func main() {
 		profiles:     &mysql.ProfilesModel{DB: db},
 		colors:       &mysql.ColorsModel{DB: db},
 		colorsPrices: &mysql.ColorsPricesModel{DB: db},
+		options:      &mysql.OptionsModel{DB: db},
 	}
 
 	srv := &http.Server{
